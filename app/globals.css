@@ -14,6 +14,7 @@
     --popover-foreground: 0 0% 3.9%;
 
     --primary: 209 83% 55%;
+    --primary-2: 209 100% 75%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 96.1%;
@@ -72,5 +73,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .btn-gradient {
+    @apply bg-gradient-to-t from-primary to-primary-2;
   }
 }

@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import { addDynamicIconSelectors } from '@iconify/tailwind'
 
 const config = {
   darkMode: ['class'],
@@ -21,6 +22,7 @@ const config = {
         foreground: 'hsl(var(--foreground))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
+          2: 'hsl(var(--primary-2))',
           foreground: 'hsl(var(--primary-foreground))'
         },
         secondary: {
@@ -69,7 +71,7 @@ const config = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [require('tailwindcss-animate'), addDynamicIconSelectors()]
 } satisfies Config
 
 export default config
