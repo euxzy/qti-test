@@ -4,5 +4,11 @@ export const BUTTON_ACTION: { path: string; icon: string; text: string; actionPa
     icon: 'icon-[material-symbols--add]',
     text: 'Input Asset',
     actionPath: '/asset/create'
+  },
+  {
+    path: '/asset/create',
+    icon: 'icon-[material-symbols--add]',
+    text: 'Input Asset',
+    actionPath: '/asset/create'
   }
 ]

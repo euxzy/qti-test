@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { SearchInput } from '~/components/shared/micro/search-input'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
@@ -17,8 +18,10 @@ export default function Asset() {
                   <h3 className="mb-1 text-sm text-neutral-400">Asset Name</h3>
                   <p>Susu Bendera</p>
                 </div>
-                <Button className="btn-gradient h-10 w-10 rounded-full p-0 text-xl">
-                  <span className="icon-[material-symbols--edit-rounded]"></span>
+                <Button asChild className="btn-gradient h-10 w-10 rounded-full p-0 text-xl">
+                  <Link href="/asset/1/edit">
+                    <span className="icon-[material-symbols--edit-rounded]"></span>
+                  </Link>
                 </Button>
               </div>
             ))}

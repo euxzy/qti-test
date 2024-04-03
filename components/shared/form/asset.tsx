@@ -19,14 +19,19 @@ const formSchema = z.object({
 export interface AssetFormProps {
   title?: string
   isEdit?: boolean
+  fields?: {
+    name?: string
+    statusId?: string
+    locationId?: string
+  }
 }
-export function AssetForm({ title, isEdit = false }: AssetFormProps) {
+export function AssetForm({ title, isEdit = false, fields }: AssetFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      status_id: '',
-      location_id: ''
+      name: fields?.name || '',
+      status_id: fields?.statusId || '',
+      location_id: fields?.locationId || ''
     }
   })
   return (
