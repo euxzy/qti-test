@@ -18,12 +18,12 @@ export function Sidebar() {
   const activeLink = (path: string) => currentPath === path || (path !== '/' && currentPath.startsWith(path))
 
   return (
-    <aside className="flex min-w-64 flex-col justify-between border-e px-8 py-8">
+    <aside className="sticky top-0 flex max-h-screen min-w-64 flex-col justify-between border-e px-8 py-8">
       <div>
         <div className="mb-16 grid place-items-center">
           <h2 className="mb-6 text-lg font-medium">TEST QTI</h2>
           <div className="relative h-10">
-            <Image src={Logo} alt="Logo" fill className="!static w-full" />
+            <Image src={Logo} alt="Logo" fill className="!relative w-full" />
           </div>
         </div>
 
