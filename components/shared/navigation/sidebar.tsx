@@ -15,6 +15,7 @@ const routeItems: { icon: string; name: string; path: string }[] = [
 
 export function Sidebar() {
   const currentPath = usePathname()
+  const activeLink = (path: string) => currentPath === path || (path !== '/' && currentPath.startsWith(path))
 
   return (
     <aside className="flex min-w-64 flex-col justify-between border-e px-8 py-8">
@@ -31,8 +32,8 @@ export function Sidebar() {
             <li key={item.name}>
               <Button
                 asChild
-                variant={currentPath === item.path ? 'default' : 'ghost'}
-                className={cn('w-full font-medium', currentPath !== item.path && 'text-neutral-500')}
+                variant={activeLink(item.path) ? 'default' : 'ghost'}
+                className={cn('w-full font-medium', !activeLink(item.path) && 'text-neutral-500')}
               >
                 <Link href={item.path}>
                   <span className={cn(item.icon, 'mr-2 text-lg')}></span>

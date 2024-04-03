@@ -34,7 +34,7 @@ export function TopBar() {
 
         <ShowIf condition={!!action}>
           <Button asChild className="btn-gradient min-w-28 font-medium">
-            <Link href="#">
+            <Link href={action?.actionPath as string}>
               <span className={cn('icon-[material-symbols--add]', 'mr-1 text-lg')}></span>
               <span>{action?.text}</span>
             </Link>
