@@ -1,14 +1,16 @@
 'use server'
 
-import { redirect } from 'next/navigation'
+// import { redirect } from 'next/navigation'
 import { HTTPClientResponseProps, httpClient } from '~/lib/http-client'
-import { setAuthTOken } from '~/lib/use-auth'
+import { setAuthToken } from '~/lib/use-auth'
 import { TODO } from '~/types/todo'
 
 export interface AuthResponseProps extends Omit<HTTPClientResponseProps, 'data'> {
   data: {
     token?: string
     message?: string
+    email?: string
+    username?: string
   }
 }
 export async function onLogin(_prevState: TODO, reqBody: TODO): Promise<AuthResponseProps['data']> {
@@ -20,14 +22,16 @@ export async function onLogin(_prevState: TODO, reqBody: TODO): Promise<AuthResp
   })
 
   /**
-   * Redirect to home if login success
+   * Set auth token
    */
   if (response?.status === 200 && response?.data) {
-    setAuthTOken(response.data.token as string)
-    redirect('/')
+    const data = response.data
+    setAuthToken(data.token ?? '')
   }
 
   return {
-    message: response?.data?.message
+    message: response?.data?.message,
+    username: response?.data.username,
+    email: response?.data?.email
   }
 }

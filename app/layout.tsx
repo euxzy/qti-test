@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Red_Hat_Display } from 'next/font/google'
 import './globals.css'
 import { Toaster } from '~/components/ui/toaster'
+import { UserStoreProvider } from '~/providers/user-store-privder'
 
 const redHat = Red_Hat_Display({ subsets: ['latin'] })
 
@@ -18,8 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={redHat.className}>
-        <main>{children}</main>
-        <Toaster />
+        <main>
+          <UserStoreProvider>
+            {children}
+            <Toaster />
+          </UserStoreProvider>
+        </main>
       </body>
     </html>
   )
