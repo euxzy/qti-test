@@ -11,6 +11,11 @@ export function middleware(req: NextRequest) {
    */
   if (!pathname.startsWith('/auth') && !authToken) return NextResponse.redirect(new URL('/auth/login', req.url))
 
+  /**
+   * Redirect to home if user already logged
+   */
+  if (pathname.startsWith('/auth') && authToken) return NextResponse.redirect(new URL('/', req.url))
+
   return nextResponse
 }
 

@@ -1,9 +1,9 @@
 import Image from 'next/image'
 
 import brandLogo from '~/assets/images/only-logo.png'
-import { LoginForm } from '~/components/shared/form/login'
 import bannerAuth from '~/assets/images/banner-auth.png'
 import bannerAuthMobile from '~/assets/images/banner-auth-mobile.png'
+import { LoginClient } from './client'
 
 export default function LoginPage() {
   return (
@@ -34,7 +34,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <LoginForm />
+          <LoginClient />
         </div>
       </div>
     </section>

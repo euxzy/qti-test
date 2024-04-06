@@ -12,10 +12,10 @@ import { cn } from '~/lib/cn'
 
 const formSchema = z.object({
   email: z.string().min(1, { message: 'This form is required' }).email({ message: 'Invalid email!' }),
-  password: z.string().min(1, { message: 'This form is required' }).min(6)
+  password: z.string().min(1, { message: 'This form is required' })
 })
 
-export function LoginForm() {
+export function LoginForm({ action = () => {} }: { action?: (args: any) => typeof args | void }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { email: '', password: '' }
@@ -25,7 +25,7 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(() => {})} className="w-full md:max-w-screen-sm">
+      <form onSubmit={form.handleSubmit(evt => action(evt))} className="w-full md:max-w-screen-sm">
         <div className="mb-12 grid gap-4 md:mb-28">
           <FormField
             control={form.control}
@@ -50,7 +50,7 @@ export function LoginForm() {
               <FormItem className="relative">
                 <Input
                   type={passVisible ? 'text' : 'password'}
-                  placeholder="Email"
+                  placeholder="Password"
                   className="bg-primary-300 ps-9 focus-visible:ring-primary-500"
                   {...field}
                 />
