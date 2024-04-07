@@ -39,7 +39,7 @@ export async function httpClient({
   }
 
   if (body) requestInit.body = contentType === ContentType._formData ? body : JSON.stringify(body).toString()
-  if (withAuth) requestInit.headers = { Authorization: 'Bearer ' + getAuthToken() }
+  if (withAuth) requestInit.headers = { ...requestInit.headers, Authorization: 'Bearer ' + getAuthToken() }
 
   try {
     process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'

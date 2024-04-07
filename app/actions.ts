@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { HTTPClientResponseProps, httpClient } from '~/lib/http-client'
 import { rmAuthToken, setRefreshToken } from '~/lib/use-auth'
 import { UserState } from '~/stores/user-store'
+import { AggAssetResponseProps } from '~/types/response'
 
 export interface ProfileResponseProps extends Omit<HTTPClientResponseProps, 'data'> {
   data: {
@@ -34,4 +35,27 @@ export async function logout() {
 
   rmAuthToken()
   return { logout: true }
+}
+
+export interface AggAssetProps {
+  labels: string[]
+  dataCount: number[]
+  dataColors: string[]
+  dataItems: { name: string; count: number }[]
+}
+export async function getAggAsset(type: 'status' | 'location'): Promise<AggAssetProps> {
+  const response = await httpClient({ url: `/home/agg-asset-by-${type}/` })
+  const statsData: AggAssetResponseProps[] = response?.data?.results
+  const labels = statsData?.map(item => (type === 'status' ? item?.status?.name : item?.location?.name) ?? '')
+  const dataCount = statsData?.map(item => item?.count ?? 0)
+
+  const colors = ['rgba(0, 182, 172, 1)', 'rgba(255, 124, 69, 1)', 'rgba(255, 97, 105, 1)']
+  const dataColors = statsData?.map((_, idx) => colors[idx % colors.length])
+
+  const dataItems = statsData?.map(item => ({
+    name: (type === 'status' ? item?.status?.name : item?.location?.name) ?? '',
+    count: item?.count ?? 0
+  }))
+
+  return { labels, dataCount, dataColors, dataItems }
 }
