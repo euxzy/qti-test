@@ -9,7 +9,7 @@ import { useUserStore } from '~/providers/user-store-privder'
 import { useRouter } from 'next/navigation'
 
 export function LoginClient() {
-  const [state, formState] = useFormState(onLogin, {})
+  const [state, formAction] = useFormState(onLogin, {})
   const { setUser } = useUserStore(state => state)
   const { toast } = useToast()
   const router = useRouter()
@@ -37,5 +37,5 @@ export function LoginClient() {
     }
   }, [router, setUser, state, toast])
 
-  return <LoginForm action={formState} />
+  return <LoginForm action={formAction} />
 }
