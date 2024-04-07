@@ -59,3 +59,22 @@ export async function getAggAsset(type: 'status' | 'location'): Promise<AggAsset
 
   return { labels, dataCount, dataColors, dataItems }
 }
+
+export interface GetAssetsProps {
+  page?: number
+  pageSize?: number
+  search?: string
+}
+export async function getAssets({ page = 1, pageSize = 10, search = '' }: GetAssetsProps) {
+  let url = `/asset/?page=${page}&page_size=${pageSize}`
+  if (!!search) url += `&search=${search}`
+  const response = await httpClient({ url })
+  const data = response?.data
+  const pagination = {
+    page: data?.page ?? 1,
+    pageSize: data?.page_size ?? 10,
+    pageCount: data?.page_count ?? 0
+  }
+
+  return { assets: data?.results ?? [], pagination }
+}

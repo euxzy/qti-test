@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"{app,components,lib,constants,stores,providers,types}/**/*.{js,ts,jsx,tsx}\"",
+    "format": "prettier --write \"{app,components,lib,constants,stores,providers,types,hooks}/**/*.{js,ts,jsx,tsx}\"",
     "prepare": "husky"
   },
   "dependencies": {
