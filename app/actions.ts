@@ -1,7 +1,8 @@
 'use server'
 
+import { redirect } from 'next/navigation'
 import { HTTPClientResponseProps, httpClient } from '~/lib/http-client'
-import { setRefreshToken } from '~/lib/use-auth'
+import { rmAuthToken, setRefreshToken } from '~/lib/use-auth'
 import { UserState } from '~/stores/user-store'
 
 export interface ProfileResponseProps extends Omit<HTTPClientResponseProps, 'data'> {
@@ -20,6 +21,9 @@ export async function getProfile(): Promise<UserState> {
   if (response?.status === 200) {
     const data = response?.data
     setRefreshToken(data?.refreshed_token ?? '')
+  } else {
+    rmAuthToken()
+    redirect('/auth/login')
   }
 
   return { email: response?.data?.email ?? '', username: response?.data?.username ?? '' }

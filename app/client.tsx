@@ -10,7 +10,7 @@ export function Profile() {
   useEffect(() => {
     const profile = async () => {
       const profile = await getProfile()
-      setUser({ email: profile.email, username: profile.username })
+      setUser({ email: profile?.email ?? '', username: profile?.username ?? '' })
     }
 
     if (!email || !username) profile()
