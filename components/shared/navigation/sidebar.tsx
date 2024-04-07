@@ -1,12 +1,14 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { Button } from '~/components/ui/button'
 import Logo from '~/assets/images/logo-horizontal-black.png'
-import { usePathname } from 'next/navigation'
 import { cn } from '~/lib/cn'
+import { ModalLogout } from '../modal/logout'
 
 const routeItems: { icon: string; name: string; path: string }[] = [
   { icon: 'icon-[material-symbols--home-outline-rounded]', name: 'Home', path: '/' },
@@ -15,6 +17,7 @@ const routeItems: { icon: string; name: string; path: string }[] = [
 
 export function Sidebar() {
   const currentPath = usePathname()
+  const [modalOpen, setModalOpen] = useState(false)
   const activeLink = (path: string) => currentPath === path || (path !== '/' && currentPath.startsWith(path))
 
   return (
@@ -45,12 +48,12 @@ export function Sidebar() {
         </ul>
       </div>
 
-      <Button asChild variant="ghost" className="w-full font-medium">
-        <Link href="#">
-          <span>Logout</span>
-          <span className={cn('icon-[material-symbols--logout-rounded]', 'ms-2 text-lg')}></span>
-        </Link>
+      <Button type="button" variant="ghost" className="w-full font-medium" onClick={() => setModalOpen(_ => true)}>
+        <span>Logout</span>
+        <span className={cn('icon-[material-symbols--logout-rounded]', 'ms-2 text-lg')}></span>
       </Button>
+
+      <ModalLogout isOpen={modalOpen} onClose={() => setModalOpen(_ => false)} />
     </aside>
   )
 }

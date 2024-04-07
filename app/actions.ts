@@ -28,3 +28,10 @@ export async function getProfile(): Promise<UserState> {
 
   return { email: response?.data?.email ?? '', username: response?.data?.username ?? '' }
 }
+
+export async function logout() {
+  await httpClient({ url: '/auth/logout', method: 'POST' })
+
+  rmAuthToken()
+  return { logout: true }
+}
