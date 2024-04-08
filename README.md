@@ -45,5 +45,5 @@ npx ts-node test_logic/02.ts
 
 npx ts-node test_logic/03.ts
 
-npx ts-node test_logic/01.ts
+npx ts-node test_logic/04.ts
 ```
