@@ -88,3 +88,14 @@ export async function getAssets({ page = 1, pageSize = 10, search = '' }: GetAss
 
   return { assets: data?.results ?? [], pagination }
 }
+
+export async function getDetailAsset(id: string) {
+  const response = await httpClient({ url: `/asset/${id}` })
+  const detailAsset = response?.data
+
+  return {
+    name: detailAsset?.name ?? '',
+    statusId: detailAsset?.status?.id ?? '',
+    locationId: detailAsset?.location?.id ?? ''
+  }
+}
