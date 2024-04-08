@@ -28,6 +28,7 @@ export interface AssetFormProps {
   statuses?: AggAssetItemProps[]
   locations?: AggAssetItemProps[]
   action?: (args: any) => typeof args | void
+  onDelete?: (args: any) => typeof args | void
 }
 export function AssetForm({
   title,
@@ -35,7 +36,8 @@ export function AssetForm({
   fields,
   statuses = [],
   locations = [],
-  action = () => {}
+  action = () => {},
+  onDelete = () => {}
 }: AssetFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -120,6 +122,7 @@ export function AssetForm({
                 type="button"
                 variant="outline"
                 className="min-w-32 border-destructive text-destructive hover:text-destructive"
+                onClick={onDelete}
               >
                 Delete
               </Button>

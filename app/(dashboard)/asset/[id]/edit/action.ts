@@ -16,3 +16,9 @@ export async function onEditAsset(_prevState: TODO, reqBody: TODO): Promise<Edit
     status: response?.status ?? 400
   }
 }
+
+export async function onDeleteAsset(_prevState: TODO, reqBody: TODO): Promise<{ status: number }> {
+  const response = await httpClient({ url: `/asset/${reqBody?.assetId}`, method: 'DELETE' })
+
+  return { status: response?.status ?? 400 }
+}

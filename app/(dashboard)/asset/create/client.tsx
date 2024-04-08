@@ -1,11 +1,12 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
+import { useRouter } from 'next/navigation'
 import { AssetForm, AssetFormProps } from '~/components/shared/form/asset'
 import { onCreateAsset } from './action'
 import { useToast } from '~/components/ui/use-toast'
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { ModalInfo } from '~/components/shared/modal/info'
 
 export interface CreateNewAssetProps {
   statuses?: AssetFormProps['statuses']
@@ -13,20 +14,19 @@ export interface CreateNewAssetProps {
 }
 export function CreateNewAsset({ statuses, locations }: CreateNewAssetProps) {
   const [formState, formAction] = useFormState(onCreateAsset, { id: '', name: '', status: 0 })
+  const [modalOpen, setModalOpen] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
 
   useEffect(() => {
     const showToast = () => {
       if (formState.status === 200 || formState.status === 201) {
-        toast({
-          title: 'Created!',
-          description: 'Asset created successfully!'
-        })
+        setModalOpen(_ => true)
+        toast({ title: 'Created!', description: 'Asset created successfully!' })
 
         setTimeout(() => {
           router.push('/asset')
-        }, 400)
+        }, 1000)
         return
       }
 
@@ -40,5 +40,10 @@ export function CreateNewAsset({ statuses, locations }: CreateNewAssetProps) {
     if (formState.status !== 0) showToast()
   }, [formState, router, toast])
 
-  return <AssetForm action={formAction} title="Fill this form bellow" statuses={statuses} locations={locations} />
+  return (
+    <>
+      <AssetForm action={formAction} title="Fill this form bellow" statuses={statuses} locations={locations} />
+      <ModalInfo isOpen={modalOpen} desc="Data has been submitted!" onClose={() => setModalOpen(_ => false)} />
+    </>
+  )
 }

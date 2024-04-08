@@ -44,6 +44,15 @@ export async function httpClient({
   try {
     process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
     const response = await fetch(baseUrl + url, requestInit)
+
+    if (method === 'DELETE') {
+      return {
+        status: response.status,
+        statusText: response.statusText,
+        data: await response.text()
+      }
+    }
+
     return {
       status: response.status,
       statusText: response.statusText,
