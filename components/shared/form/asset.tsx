@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '~/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { Button } from '~/components/ui/button'
+import { AggAssetItemProps } from '~/types/response'
 
 const formSchema = z.object({
   name: z.string().min(1, { message: 'This form is required' }),
@@ -24,8 +25,18 @@ export interface AssetFormProps {
     statusId?: string
     locationId?: string
   }
+  statuses?: AggAssetItemProps[]
+  locations?: AggAssetItemProps[]
+  action?: (args: any) => typeof args | void
 }
-export function AssetForm({ title, isEdit = false, fields }: AssetFormProps) {
+export function AssetForm({
+  title,
+  isEdit = false,
+  fields,
+  statuses = [],
+  locations = [],
+  action = () => {}
+}: AssetFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,7 +51,7 @@ export function AssetForm({ title, isEdit = false, fields }: AssetFormProps) {
         <h1 className="mb-6 text-3xl font-semibold">{title}</h1>
       </ShowIf>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(() => {})} className="grid gap-4">
+        <form onSubmit={form.handleSubmit(evt => action(evt))} className="grid gap-4">
           <FormField
             control={form.control}
             name="name"
@@ -66,7 +77,11 @@ export function AssetForm({ title, isEdit = false, fields }: AssetFormProps) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="aaa">aaa</SelectItem>
+                    {statuses?.map(item => (
+                      <SelectItem key={item?.id} value={item?.id}>
+                        {item?.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -87,7 +102,11 @@ export function AssetForm({ title, isEdit = false, fields }: AssetFormProps) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="aaa">aaa</SelectItem>
+                    {locations?.map(item => (
+                      <SelectItem key={item?.id} value={item?.id}>
+                        {item?.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />

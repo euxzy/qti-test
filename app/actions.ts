@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { HTTPClientResponseProps, httpClient } from '~/lib/http-client'
 import { rmAuthToken, setRefreshToken } from '~/lib/use-auth'
 import { UserState } from '~/stores/user-store'
-import { AggAssetResponseProps } from '~/types/response'
+import { AggAssetItemProps, AggAssetResponseProps } from '~/types/response'
 
 export interface ProfileResponseProps extends Omit<HTTPClientResponseProps, 'data'> {
   data: {
@@ -58,6 +58,16 @@ export async function getAggAsset(type: 'status' | 'location'): Promise<AggAsset
   }))
 
   return { labels, dataCount, dataColors, dataItems }
+}
+
+export async function getStatuses(): Promise<AggAssetItemProps[]> {
+  const response = await httpClient({ url: '/status/' })
+  return response?.data?.results ?? []
+}
+
+export async function getLocations(): Promise<AggAssetItemProps[]> {
+  const response = await httpClient({ url: '/location/' })
+  return response?.data?.results ?? []
 }
 
 export interface GetAssetsProps {

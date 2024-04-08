@@ -1,9 +1,12 @@
-import { AssetForm } from '~/components/shared/form/asset'
+import { getLocations, getStatuses } from '~/app/actions'
+import { CreateNewAsset } from './client'
 
-export default function CreateAsset() {
+export default async function CreateAsset() {
+  const statuses = await getStatuses()
+  const locations = await getLocations()
   return (
     <section className="pe-6">
-      <AssetForm title="Fill this form bellow" />
+      <CreateNewAsset statuses={statuses} locations={locations} />
     </section>
   )
 }
